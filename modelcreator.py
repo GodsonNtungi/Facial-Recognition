@@ -44,7 +44,7 @@ fit_model={}
 for algo,pipeline in pipeline.items():
     model=pipeline.fit(X_train,y_train)
     fit_model[algo]=model
-    #%%
+#%%
 for algo,model in fit_model.items():
     prediction=model.predict(X_test)
     score=accuracy_score(y_test,prediction)
@@ -53,19 +53,3 @@ for algo,model in fit_model.items():
     
 with open('face4.pkl','wb') as f:
     pickle.dump(fit_model['gb'],f)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
