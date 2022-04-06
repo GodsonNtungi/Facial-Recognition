@@ -75,4 +75,3 @@ work.to_csv('face_data1.csv',index=True)
 #%%
 print(work.iloc[0].compare(work.iloc[756]))
 
-
