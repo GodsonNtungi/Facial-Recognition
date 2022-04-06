@@ -14,13 +14,12 @@ import numpy as np
 mp_drawing_utils = mp.solutions.drawing_utils
 mp_holistic = mp.solutions.holistic
 mp_drawing_styles = mp.solutions.drawing_styles
-landmarks = ['class']
 
 
 # create a landmarks csv
 # 
 def landmark_csv():
-    global landmarks
+    landmarks = ['class']
     for i in range(1,469):
         landmarks += ['x{}'.format(i),'y{}'.format(i),'z{}'.format(i),'v{}'.format(i)]
     # print(len(landmarks))

@@ -10,8 +10,11 @@ import cv2
 import pandas as pd
 import numpy as np
 import pickle
+import pathlib
+
+base_dir = pathlib.Path(__file__).parent
 # In[9]:
-with open('face4.pkl','rb') as f:
+with open(base_dir / 'FaceRecog/data/face_model.pkl','rb') as f:
     model=pickle.load(f)
 #%%
 print(model)
