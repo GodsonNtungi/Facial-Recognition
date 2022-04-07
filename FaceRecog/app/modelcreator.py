@@ -69,7 +69,7 @@ def create_model(target, algorithm='gb'):
     X=face_data.drop('class',axis=1)
     y=face_data['class']
     
-    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.3,random_state=1234)
+    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=1234)
     
     fit_model={}
 

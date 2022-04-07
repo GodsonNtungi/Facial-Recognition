@@ -10,7 +10,7 @@ import cv2
 import pandas as pd
 import numpy as np
 import pickle
-import pathlib
+import pathlib, time
 
 base_dir = pathlib.Path(__file__).parent
 # In[9]:
@@ -47,28 +47,33 @@ with mp_holistic.Holistic(min_detection_confidence=0.5,min_tracking_confidence=0
         #cv2.imshow('raw',image)
         try:
             coord1=tuple(np.multiply(np.array((result.face_landmarks.landmark[mp_holistic.PoseLandmark.RIGHT_EAR].x,result.face_landmarks.landmark[mp_holistic.PoseLandmark.RIGHT_EAR].y)),[640,480]).astype('int'))
-            print(coord1)
-            coord1=np.array(coord1)+np.array((80,-110))
+            # print(coord1)
+            
+            z = result.face_landmarks.landmark[mp_holistic.PoseLandmark.LEFT_EYE].z
+            # cv2.putText(img=image, text = str(z)[:8], org = np.array(coord1)+np.array((100,-110)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(255,0,0), thickness=3)
+            
+            coord1=np.array(coord1)+np.array((100,-110))
             coord2=tuple(np.multiply(np.array((result.face_landmarks.landmark[mp_holistic.PoseLandmark.LEFT_EAR].x,result.face_landmarks.landmark[mp_holistic.PoseLandmark.LEFT_EAR].y)),[640,480]).astype('int'))
             
-            coord2=np.array(coord2)+np.array((-40,100))
-            print(coord2)
-            image=cv2.rectangle(image,coord1,coord2,(0,255,0),5)
+            coord2=np.array(coord2)+np.array((-60,130))
+            # print(coord2)
+           
+            if z<-0.025 and z>-0.032:
+                image=cv2.rectangle(image,coord1,coord2,(0,255,0),5)
+                face=np.array(result.face_landmarks.landmark)
+                face_row=list(np.array([[landmark.x,landmark.y,landmark.z,landmark.visibility] for landmark in face]).flatten())
+                added=pd.DataFrame([face_row])
+                prediction=model.predict(added)[0]
+                prediction_prob=model.predict_proba(added)[0][0]
+            
+                print(prediction,prediction_prob)
+            else:
+                 image=cv2.rectangle(image,coord1,coord2,(0,0,255),5)
             cv2.imshow('raw',image)
-            
-            
-            face=np.array(result.face_landmarks.landmark)
-            face_row=list(np.array([[landmark.x,landmark.y,landmark.z,landmark.visibility] for landmark in face]).flatten())
-            added=pd.DataFrame([face_row])
-            prediction=model.predict(added)[0]
-            prediction_prob=model.predict_proba(added)[0][0]
-            
-            print(prediction,prediction_prob)
-            
+            time.sleep(1)
+                        
         except:
             cv2.imshow('raw',image)
-        
-        
         
         if cv2.waitKey(10) & 0xFF == ord('Q') :
             break
