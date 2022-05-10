@@ -1,3 +1,6 @@
 ## Facial-Recognition 
-The system involves a preprocessing stage, data collection ,model creation and the software that actually <br>
-recognizes faces and differentiates them
+The system involves a preprocessing stage, data collection ,model creation and the
+software that actually recognizes faces and differentiates them.
+
+### Prepocessing Stage
+This stage uses mediapipe that identifies landmarks found on the face 
